@@ -1,4 +1,4 @@
-# pattern_observer
+# Pattern Observer VueJs
 
 ## Project setup
 ```
@@ -22,3 +22,10 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Captura de la Web
+
+![Captura web](src/assets/img_1.png "Aplicacion patron observer")
+
+
+

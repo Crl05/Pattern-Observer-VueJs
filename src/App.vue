@@ -25,20 +25,23 @@
 
   </div>
   <div class="col-8 m-auto mt-5">
-    <hr class="mt-3 rounded" style="color: #2c3e50; height: 7px" />
+    <hr class="mt-3 rounded" style="color: #2c3e50; height: 7px"/>
     <h2 class="fw-bold">En Vue Js</h2>
     <h4 class="fw-light text-justify mt-4">Una de las características más distintivas de Vue es el sistema de
       reactividad discreto. El estado de los componentes son objetos JavaScript reactivos. Cuando los modifica, la vista
       se actualiza. Hace que la administración del estado sea simple e intuitiva, pero también es importante comprender
-      cómo funciona para evitar algunos errores comunes. En esta sección, profundizaremos en algunos de los detalles de
-      nivel inferior del sistema de reactividad de Vue.</h4>
+      cómo funciona para evitar algunos errores comunes.</h4>
+    <h4>Las variables reactivas se llaman así porque son capaces de refrescar la vista de los componente cuando éstas
+      cambian.</h4>
     <h3 class="fw-bold mt-5">Comuted</h3>
-    <h4 class="fw-light ext-justify mt-4">hay varias maneras de establecer valores estáticos o dinámicos para mostrar en
+    <h4 class="fw-light ext-justify mt-4">Hay varias maneras de establecer valores estáticos o dinámicos para mostrar en
       la plantilla. Estas incluyen el uso de la interpolación de texto, la codificación directa en su HTML, o incluso el
       uso de expresiones simples para modificar los datos.</h4>
-    <h4>Aquí es donde las propiedades computadas son muyd útiles. En este tutorial, repasaremos los fundamentos del uso
-      de las propiedades computadas en Vue.js. A continuación, pondremos en práctica todas nuestras nuevas habilidades
-      construyendo una aplicación de ejemplo en vivo.</h4>
+
+    <h4>Aquí es donde las propiedades computadas son muy útiles. Las propiedades computadas o computed properties son
+      una característica muy interesante de Vue.
+      Básicamente una computada es una variable, la diferencia con las Variables de Vue es que las computadas
+      normalmente transforman la variable o hacen algún tipo de cálculo antes de devolverla.</h4>
     <h3 class="fw-bold mt-5">Aplicacion</h3>
 
 

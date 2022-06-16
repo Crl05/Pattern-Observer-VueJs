@@ -6,7 +6,7 @@
           <h1>Agregar notas</h1>
           <label>Nombre</label>
           <input type="text" class="form-control" v-model="nombre">
-          <label>promedio</label>
+          <label>Nota</label>
           <input type="number" class="form-control" v-model="promedio" max="100">
           <input type="button" value="guardar" class="btn btn-success mt-3" v-on:click="agregarnota">
         </div>
@@ -17,7 +17,7 @@
               <thead>
               <tr>
                 <th>Nombre</th>
-                <th>Promedio</th>
+                <th>Nota</th>
               </tr>
               </thead>
               <tbody>
@@ -98,7 +98,7 @@ export default {
         this.nombre = "";
         this.promedio = "";
       } else {
-        alert("ingrese el nombre y el promedio del estudiante")
+        alert("ingrese el nombre y la nota del estudiante")
       }
     }
   }
@@ -116,8 +116,7 @@ export default {
       if (M / this.lista.length) {
         total = (M / this.lista.length) * 100
       } else {
-        total =
-            0;
+        total = 0;
       }
       return total;
     },

@@ -17,28 +17,35 @@
       Publicador-Suscriptor. Observer es uno de los principales patrones de diseño utilizados en interfaces gráficas de
       usuario (GUI), ya que permite desacoplar al componente gráfico de la acción a realizar.</h4>
   </div>
-
-  <img class="mt-4 mb-4 col-5 img-thumbnail" src="./assets/img.png" alt="representacion patron observer">
+  <a href="https://refactoring.guru/es/design-patterns/observer">
+    <img class="mt-4 mb-4 col-5 img-thumbnail" src="./assets/img.png" alt="representacion patron observer">
+  </a>
   <div id="content-text" class="mt-4 col-xl-8 m-auto">
     <h4>En conclusion: notificar a varios objetos sobre cualquier evento que le suceda al objeto que están
       observando.</h4>
 
   </div>
+  <a href="https://refactoring.guru/es/design-patterns/observer">
+    <img class="mt-4 mb-4 col-5 img-thumbnail" src="./assets/img_2.png" alt="representacion patron observer">
+  </a>
+
   <div class="col-8 m-auto mt-5">
     <hr class="mt-3 rounded" style="color: #2c3e50; height: 7px"/>
     <h2 class="fw-bold">En Vue Js</h2>
     <h4 class="fw-light text-justify mt-4">Una de las características más distintivas de Vue es el sistema de
-      reactividad discreto. El estado de los componentes son objetos JavaScript reactivos. Cuando los modifica, la vista
+      <a href="https://vuejs.org/guide/extras/reactivity-in-depth.html">reactividad discreto</a>. El estado de los
+      componentes son objetos JavaScript reactivos. Cuando los modifica, la vista
       se actualiza. Hace que la administración del estado sea simple e intuitiva, pero también es importante comprender
       cómo funciona para evitar algunos errores comunes.</h4>
     <h4>Las variables reactivas se llaman así porque son capaces de refrescar la vista de los componente cuando éstas
       cambian.</h4>
-    <h3 class="fw-bold mt-5">Comuted</h3>
+    <h3 class="fw-bold mt-5"><a href="https://es.vuejs.org/v2/guide/computed.html">Comuted</a></h3>
     <h4 class="fw-light ext-justify mt-4">Hay varias maneras de establecer valores estáticos o dinámicos para mostrar en
       la plantilla. Estas incluyen el uso de la interpolación de texto, la codificación directa en su HTML, o incluso el
       uso de expresiones simples para modificar los datos.</h4>
 
-    <h4>Aquí es donde las propiedades computadas son muy útiles. Las propiedades computadas o computed properties son
+    <h4>Aquí es donde las propiedades computadas son muy útiles. Las <a href="https://codingpotions.com/vue-computadas">propiedades
+      computadas o computed properties</a> son
       una característica muy interesante de Vue.
       Básicamente una computada es una variable, la diferencia con las Variables de Vue es que las computadas
       normalmente transforman la variable o hacen algún tipo de cálculo antes de devolverla.</h4>

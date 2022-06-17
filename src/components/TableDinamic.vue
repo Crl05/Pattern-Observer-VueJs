@@ -7,7 +7,7 @@
           <label>Nombre</label>
           <input type="text" class="form-control" v-model="nombre">
           <label>Nota</label>
-          <input type="number" class="form-control" v-model="promedio" max="100">
+          <input type="number" class="form-control" min="1" step="1" v-model="promedio" max="100">
           <input type="button" value="guardar" class="btn btn-success mt-3" v-on:click="agregarnota">
         </div>
         <div class="col-md-6 col-xs-12 ">
@@ -93,13 +93,18 @@ export default {
   },
   methods: {
     agregarnota: function () {
-      if (this.nombre != "" && this.promedio != "") {
-        this.lista.push({nombre: this.nombre, promedio: this.promedio});
-        this.nombre = "";
-        this.promedio = "";
-      } else {
-        alert("ingrese el nombre y la nota del estudiante")
+      if(parseInt(this.promedio)>100) {
+        alert("El promedio no debe ser mayor a 100")
+      }else{
+        if (this.nombre != "" && this.promedio != "" && parseInt(this.promedio)<=100 ) {
+          this.lista.push({nombre: this.nombre, promedio: this.promedio});
+          this.nombre = "";
+          this.promedio = "";
+        }else{
+          alert("ingrese el nombre y la nota del estudiante")
+        }
       }
+
     }
   }
   , computed: {
@@ -123,7 +128,7 @@ export default {
     calculeregular: function () {
       let M = 0;
       for (let i = 0; i < this.lista.length; i++) {
-        if (parseInt(this.lista.at(i).promedio) > 25 && parseInt(this.lista.at(i).promedio) <=75) {
+        if (parseInt(this.lista.at(i).promedio) > 25 && parseInt(this.lista.at(i).promedio) <= 75) {
           // eslint-disable-next-line no-unused-vars
           M++;
         }
@@ -140,7 +145,7 @@ export default {
     calculebuenos: function () {
       let M = 0;
       for (let i = 0; i < this.lista.length; i++) {
-        if (parseInt(this.lista.at(i).promedio) > 75 && parseInt(this.lista.at(i).promedio) <=100) {
+        if (parseInt(this.lista.at(i).promedio) > 75 && parseInt(this.lista.at(i).promedio) <= 100) {
           // eslint-disable-next-line no-unused-vars
           M++;
         }
@@ -156,27 +161,20 @@ export default {
     },
     colorb: function () {
       return {
-        'bg-danger': parseInt(this.calculebuenos) <= 25 ,
-        'bg-warning': parseInt(this.calculebuenos)> 25 && parseInt(this.calculebuenos)<= 75,
-        'bg-success': parseInt(this.calculebuenos)> 75 && parseInt(this.calculebuenos)<= 100,
+        'bg-success': this.calculebuenos,
       }
     },
     colorm: function () {
       return {
-        'bg-danger': parseInt(this.calculemalos) <= 25 ,
-        'bg-warning': parseInt(this.calculemalos)> 25 && parseInt(this.calculemalos)<= 75,
-        'bg-success': parseInt(this.calculemalos)> 75 && parseInt(this.calculemalos)<= 100,
+        'bg-danger':this.calculemalos,
       }
     },
     colorr: function () {
       return {
-        'bg-danger': parseInt(this.calculeregular) <= 25 ,
-        'bg-warning': parseInt(this.calculeregular)> 25 && parseInt(this.calculeregular)<= 75,
-        'bg-success': parseInt(this.calculeregular)> 75 && parseInt(this.calculeregular)<= 100,
+        'bg-warning':this.calculeregular,
       }
-    },
+    }
   }
-
 }
 </script>
 <style scoped>

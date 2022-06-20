@@ -20,11 +20,8 @@
                 <th>Nota</th>
               </tr>
               </thead>
-              <tbody>
-              <tr v-for="(item,index) in lista" :key="index.id">
-                <th v-text="item.nombre" class="fw-light"></th>
-                <th v-text="item.promedio" class="fw-light"></th>
-              </tr>
+              <tbody id="table-body">
+
               </tbody>
             </table>
           </div>
@@ -33,147 +30,325 @@
       </div>
 
     </div>
+    <div id="total">
+    </div>
+
     <h5 class="mt-3">Porcentaje de estudiantes malos</h5>
     <div class="progress m-auto  col-8">
-      <div
+      <div id="progress-malos"
           class="progress-bar"
           role="progressbar"
-          :style="{'width': calculemalos+'%'}"
           aria-valuenow="25"
           aria-valuemin="0"
           aria-valuemax="100"
-          :class="colorm"
-
       >
-        {{ calculemalos }}%
       </div>
     </div>
     <h5 class="mt-3">Porcentaje de estudiantes regulares</h5>
     <div class="progress m-auto  col-8">
-      <div
+      <div id="progress-regular"
           class="progress-bar"
           role="progressbar"
-          :style="{'width': calculeregular+'%'}"
           aria-valuenow="25"
           aria-valuemin="0"
           aria-valuemax="100"
-          :class="colorr"
       >
-        {{ calculeregular }}%
       </div>
     </div>
     <h5 class="mt-3">Porcentaje de estudiantes buenos</h5>
     <div class="progress m-auto mb-5 col-8">
-      <div
+      <div id="progress-buenos"
           class="progress-bar"
           role="progressbar"
-          :style="{'width': calculebuenos+'%'}"
           aria-valuenow="25"
           aria-valuemin="0"
           aria-valuemax="100"
-          :class="colorb"
-
       >
-        {{ calculebuenos }}%
       </div>
     </div>
   </div>
 </template>
 
 <script>
+class Subject {
+  constructor() {
+    this.observers = [];
+  }
+
+  //Se agrega observadores.
+  susbcribe(obs) {
+    this.observers.push(obs);
+  }
+
+  //Se elimina observadores.
+  unsubscribe(obs) {
+    this.observers = this.observers.filter((el) => el != obs);
+  }
+
+  //Cambios de estado se notifica.
+  notify(objeto) {
+    this.observers.forEach((obs) => {
+      obs.notify(objeto);
+    });
+  }
+}
+
+//Herencia
+// eslint-disable-next-line no-unused-vars
+class ItemSubject extends Subject {
+
+  constructor() {
+    super();
+    this.items = [];
+  }
+
+  notify(item) {
+    console.log(item)
+    this.items.push(item);
+    super.notify(this);
+  }
+}
+
+// eslint-disable-next-line no-unused-vars
+class ListObserver {
+  constructor(tag) {
+    this.tag = tag;
+  }
+
+  notify(subject) {
+    // this.tag.innerHTML = "";
+    console.log(this.tag)
+    console.log(subject.items)
+
+    subject.items.forEach(e => {
+      console.log(e)
+      this.tag.innerHTML=''
+      for (let index = 0; index < subject.items.length; index++) {
+        if (parseFloat(subject.items[index].promedio) <= 25.0) {
+          this.tag.innerHTML += '<tr><th>'+subject.items[index].nombre +'</th><th style="color:red; background: #3f3f3f">'+subject.items[index].promedio+'</th></tr>' ;
+        }
+        if (parseFloat(subject.items[index].promedio) > 25.0 && parseFloat(subject.items[index].promedio) <= 75.0  ) {
+          this.tag.innerHTML += '<tr><th>'+subject.items[index].nombre +'</th><th style="color:yellow; background: #3f3f3f">'+subject.items[index].promedio+'</th></tr>' ;
+        }
+        if (parseFloat(subject.items[index].promedio) > 75.0 && parseFloat(subject.items[index].promedio) <= 100.0  ) {
+          this.tag.innerHTML += '<tr><th>'+subject.items[index].nombre +'</th><th style="color:green; background: #3f3f3f">'+subject.items[index].promedio+'</th></tr>' ;
+        }
+          // this.tag.innerHTML += '<tr><th>'+subject.items[index].nombre +'</th><th>'+subject.items[index].promedio+'</th></tr>' ;
+      }
+    })
+  }
+}
+
+// eslint-disable-next-line no-unused-vars
+class TotalObserverBad {
+  constructor(tag) {
+    this.tag = tag;
+  }
+
+  notify(subject) {
+
+    subject.items.forEach(e => {
+      console.log(e)
+      this.tag.innerHTML=''
+      let aux=0;
+      for (let index = 0; index < subject.items.length; index++) {
+        console.log(aux);
+        if (parseFloat(subject.items[index].promedio) <= 25.0){
+          // eslint-disable-next-line no-unused-vars
+          aux ++;
+        }
+      }
+      console.log(aux/subject.items.length);
+      this.tag.innerHTML = ((aux/subject.items.length)*100).toFixed(2)+'%';
+      this.tag.style.cssText = 'width:'+(aux/subject.items.length)*100+'%; background:red; color:black; font-weight:bolder';
+
+    })
+  }
+}
+
+class TotalObserverRegular {
+  constructor(tag) {
+    this.tag = tag;
+  }
+
+  notify(subject) {
+
+    subject.items.forEach(e => {
+      console.log(e)
+      this.tag.innerHTML=''
+      let aux=0;
+      for (let index = 0; index < subject.items.length; index++) {
+        console.log(aux);
+        if (parseFloat(subject.items[index].promedio) > 25.0 && parseFloat(subject.items[index].promedio) <= 75.0  ){
+          // eslint-disable-next-line no-unused-vars
+          aux ++;
+        }
+      }
+      console.log(aux/subject.items.length);
+      this.tag.innerHTML = ((aux/subject.items.length)*100).toFixed(2)+'%';
+      this.tag.style.cssText = 'width:'+(aux/subject.items.length)*100+'%;background:yellow; color:black; font-weight:bolder';
+
+    })
+  }
+}
+
+class TotalObserverGood {
+  constructor(tag) {
+    this.tag = tag;
+  }
+
+  notify(subject) {
+
+    subject.items.forEach(e => {
+      console.log(e)
+      this.tag.innerHTML=''
+      let aux=0;
+      for (let index = 0; index < subject.items.length; index++) {
+        console.log(aux);
+        if (parseFloat(subject.items[index].promedio) > 75.0 && parseFloat(subject.items[index].promedio) <= 100.0  ){
+          // eslint-disable-next-line no-unused-vars
+          aux ++;
+        }
+      }
+      console.log(aux/subject.items.length);
+      this.tag.innerHTML = ((aux/subject.items.length)*100).toFixed(2)+'%';
+      this.tag.style.cssText = 'width:'+(aux/subject.items.length)*100+'%; background:green; color:black; font-weight:bolder';
+
+    })
+  }
+}
+// eslint-disable-next-line no-unused-vars
+class DynamicObserver {
+  constructor(tag, fn) {
+    this.tag = tag;
+    this.fn = fn;
+  }
+
+  notify(subject) {
+    this.fn(subject, this.tag);
+  }
+}
+let itemsSubject = new ItemSubject();
+
 export default {
   name: "TableDynamic",
   el: '#app',
   data() {
     return {
-      lista: [],
+      lista: {},
       nombre: '',
       promedio: '',
     }
   },
   methods: {
     agregarnota: function () {
-      if(parseInt(this.promedio)>100) {
+      let listObserver = new ListObserver(document.getElementById("table-body"));
+      let totalObserver = new TotalObserverBad(
+          document.getElementById("progress-malos")
+      );
+      let totalObserver1 = new TotalObserverRegular(
+          document.getElementById("progress-regular")
+      );
+      let totalObserver2 = new TotalObserverGood(
+          document.getElementById("progress-buenos")
+      );
+      itemsSubject.susbcribe(listObserver);
+      itemsSubject.susbcribe(totalObserver);
+      itemsSubject.susbcribe(totalObserver1);
+      itemsSubject.susbcribe(totalObserver2);
+      if (parseInt(this.promedio) > 100) {
         alert("El promedio no debe ser mayor a 100")
-      }else{
-        if (this.nombre != "" && this.promedio != "" && parseInt(this.promedio)<=100 ) {
-          this.lista.push({nombre: this.nombre, promedio: this.promedio});
-          this.nombre = "";
-          this.promedio = "";
-        }else{
+      } else {
+        if (this.nombre != "" && this.promedio != "" && parseInt(this.promedio) <= 100) {
+          // this.lista.push({nombre: this.nombre, promedio: this.promedio});
+          console.log(this.promedio)
+          console.log(this.nombre)
+         itemsSubject.notify({
+            nombre: this.nombre,
+            promedio: this.promedio,
+          });
+        } else {
           alert("ingrese el nombre y la nota del estudiante")
         }
       }
 
-    }
+    },
+    // async created() {
+    //   const response = await fetch("https://localhost/api/students/").
+    //   then(()=>{
+    //     this.lista=data.json
+    //   }).catch(err => console.log(err));
+    //   const data = await response.json();
+    //   console.log(this.lista)
+    // }
   }
   , computed: {
     // eslint-disable-next-line vue/return-in-computed-property
-    calculemalos: function () {
-      let M = 0;
-      for (let i = 0; i < this.lista.length; i++) {
-        if (parseInt(this.lista.at(i).promedio) <= 25) {
-          // eslint-disable-next-line no-unused-vars
-          M++;
-        }
-      }
-      var total;
-      if (M / this.lista.length) {
-        total = (M / this.lista.length) * 100
-      } else {
-        total = 0;
-      }
-      return total;
-    },
-    calculeregular: function () {
-      let M = 0;
-      for (let i = 0; i < this.lista.length; i++) {
-        if (parseInt(this.lista.at(i).promedio) > 25 && parseInt(this.lista.at(i).promedio) <= 75) {
-          // eslint-disable-next-line no-unused-vars
-          M++;
-        }
-      }
-      var total;
-      if (M / this.lista.length) {
-        total = (M / this.lista.length) * 100
-      } else {
-        total =
-            0;
-      }
-      return total;
-    },
-    calculebuenos: function () {
-      let M = 0;
-      for (let i = 0; i < this.lista.length; i++) {
-        if (parseInt(this.lista.at(i).promedio) > 75 && parseInt(this.lista.at(i).promedio) <= 100) {
-          // eslint-disable-next-line no-unused-vars
-          M++;
-        }
-      }
-      var total;
-      if (M / this.lista.length) {
-        total = (M / this.lista.length) * 100
-      } else {
-        total =
-            0;
-      }
-      return total;
-    },
-    colorb: function () {
-      return {
-        'bg-success': this.calculebuenos,
-      }
-    },
-    colorm: function () {
-      return {
-        'bg-danger':this.calculemalos,
-      }
-    },
-    colorr: function () {
-      return {
-        'bg-warning':this.calculeregular,
-      }
-    }
+    // calculemalos: function () {
+    //   let M = 0;
+    //   for (let i = 0; i < this.lista.length; i++) {
+    //     if (parseInt(this.lista.at(i).promedio) <= 25) {
+    //       // eslint-disable-next-line no-unused-vars
+    //       M++;
+    //     }
+    //   }
+    //   var total;
+    //   if (M / this.lista.length) {
+    //     total = (M / this.lista.length) * 100
+    //   } else {
+    //     total = 0;
+    //   }
+    //   return total;
+    // },
+    // calculeregular: function () {
+    //   let M = 0;
+    //   for (let i = 0; i < this.lista.length; i++) {
+    //     if (parseInt(this.lista.at(i).promedio) > 25 && parseInt(this.lista.at(i).promedio) <= 75) {
+    //       // eslint-disable-next-line no-unused-vars
+    //       M++;
+    //     }
+    //   }
+    //   var total;
+    //   if (M / this.lista.length) {
+    //     total = (M / this.lista.length) * 100
+    //   } else {
+    //     total =
+    //         0;
+    //   }
+    //   return total;
+    // },
+    // calculebuenos: function () {
+    //   let M = 0;
+    //   for (let i = 0; i < this.lista.length; i++) {
+    //     if (parseInt(this.lista.at(i).promedio) > 75 && parseInt(this.lista.at(i).promedio) <= 100) {
+    //       // eslint-disable-next-line no-unused-vars
+    //       M++;
+    //     }
+    //   }
+    //   var total;
+    //   if (M / this.lista.length) {
+    //     total = (M / this.lista.length) * 100
+    //   } else {
+    //     total =
+    //         0;
+    //   }
+    //   return total;
+    // },
+    // colorb: function () {
+    //   return {
+    //     'bg-success': this.calculebuenos,
+    //   }
+    // },
+    // colorm: function () {
+    //   return {
+    //     'bg-danger': this.calculemalos,
+    //   }
+    // },
+    // colorr: function () {
+    //   return {
+    //     'bg-warning': this.calculeregular,
+    //   }
+    // }
   }
 }
 </script>

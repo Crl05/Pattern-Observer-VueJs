@@ -36,33 +36,33 @@
     <h5 class="mt-3">Porcentaje de estudiantes malos</h5>
     <div class="progress m-auto  col-8">
       <div id="progress-malos"
-          class="progress-bar"
-          role="progressbar"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
+           class="progress-bar"
+           role="progressbar"
+           aria-valuenow="25"
+           aria-valuemin="0"
+           aria-valuemax="100"
       >
       </div>
     </div>
     <h5 class="mt-3">Porcentaje de estudiantes regulares</h5>
     <div class="progress m-auto  col-8">
       <div id="progress-regular"
-          class="progress-bar"
-          role="progressbar"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
+           class="progress-bar"
+           role="progressbar"
+           aria-valuenow="25"
+           aria-valuemin="0"
+           aria-valuemax="100"
       >
       </div>
     </div>
     <h5 class="mt-3">Porcentaje de estudiantes buenos</h5>
     <div class="progress m-auto mb-5 col-8">
       <div id="progress-buenos"
-          class="progress-bar"
-          role="progressbar"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
+           class="progress-bar"
+           role="progressbar"
+           aria-valuenow="25"
+           aria-valuemin="0"
+           aria-valuemax="100"
       >
       </div>
     </div>
@@ -70,6 +70,22 @@
 </template>
 
 <script>
+async function getResponse() {
+  const response = await fetch(
+      'https://localhost/api/students/',
+      {
+        method: 'GET'
+      }
+  );
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json();
+}
+getResponse().then(data => {
+  console.log(data);
+});
+
 class Subject {
   constructor() {
     this.observers = [];
@@ -105,6 +121,7 @@ class ItemSubject extends Subject {
   notify(item) {
     console.log(item)
     this.items.push(item);
+
     super.notify(this);
   }
 }
@@ -122,18 +139,18 @@ class ListObserver {
 
     subject.items.forEach(e => {
       console.log(e)
-      this.tag.innerHTML=''
+      this.tag.innerHTML = ''
       for (let index = 0; index < subject.items.length; index++) {
         if (parseFloat(subject.items[index].promedio) <= 25.0) {
-          this.tag.innerHTML += '<tr><th>'+subject.items[index].nombre +'</th><th style="color:red; background: #3f3f3f">'+subject.items[index].promedio+'</th></tr>' ;
+          this.tag.innerHTML += '<tr><th>' + subject.items[index].nombre + '</th><th style="color:red; background: #3f3f3f">' + subject.items[index].promedio + '</th></tr>';
         }
-        if (parseFloat(subject.items[index].promedio) > 25.0 && parseFloat(subject.items[index].promedio) <= 75.0  ) {
-          this.tag.innerHTML += '<tr><th>'+subject.items[index].nombre +'</th><th style="color:yellow; background: #3f3f3f">'+subject.items[index].promedio+'</th></tr>' ;
+        if (parseFloat(subject.items[index].promedio) > 25.0 && parseFloat(subject.items[index].promedio) <= 75.0) {
+          this.tag.innerHTML += '<tr><th>' + subject.items[index].nombre + '</th><th style="color:yellow; background: #3f3f3f">' + subject.items[index].promedio + '</th></tr>';
         }
-        if (parseFloat(subject.items[index].promedio) > 75.0 && parseFloat(subject.items[index].promedio) <= 100.0  ) {
-          this.tag.innerHTML += '<tr><th>'+subject.items[index].nombre +'</th><th style="color:green; background: #3f3f3f">'+subject.items[index].promedio+'</th></tr>' ;
+        if (parseFloat(subject.items[index].promedio) > 75.0 && parseFloat(subject.items[index].promedio) <= 100.0) {
+          this.tag.innerHTML += '<tr><th>' + subject.items[index].nombre + '</th><th style="color:green; background: #3f3f3f">' + subject.items[index].promedio + '</th></tr>';
         }
-          // this.tag.innerHTML += '<tr><th>'+subject.items[index].nombre +'</th><th>'+subject.items[index].promedio+'</th></tr>' ;
+        // this.tag.innerHTML += '<tr><th>'+subject.items[index].nombre +'</th><th>'+subject.items[index].promedio+'</th></tr>' ;
       }
     })
   }
@@ -149,18 +166,18 @@ class TotalObserverBad {
 
     subject.items.forEach(e => {
       console.log(e)
-      this.tag.innerHTML=''
-      let aux=0;
+      this.tag.innerHTML = ''
+      let aux = 0;
       for (let index = 0; index < subject.items.length; index++) {
         console.log(aux);
-        if (parseFloat(subject.items[index].promedio) <= 25.0){
+        if (parseFloat(subject.items[index].promedio) <= 25.0) {
           // eslint-disable-next-line no-unused-vars
-          aux ++;
+          aux++;
         }
       }
-      console.log(aux/subject.items.length);
-      this.tag.innerHTML = ((aux/subject.items.length)*100).toFixed(2)+'%';
-      this.tag.style.cssText = 'width:'+(aux/subject.items.length)*100+'%; background:red; color:black; font-weight:bolder';
+      console.log(aux / subject.items.length);
+      this.tag.innerHTML = ((aux / subject.items.length) * 100).toFixed(2) + '%';
+      this.tag.style.cssText = 'width:' + (aux / subject.items.length) * 100 + '%; background:red; color:black; font-weight:bolder';
 
     })
   }
@@ -175,18 +192,18 @@ class TotalObserverRegular {
 
     subject.items.forEach(e => {
       console.log(e)
-      this.tag.innerHTML=''
-      let aux=0;
+      this.tag.innerHTML = ''
+      let aux = 0;
       for (let index = 0; index < subject.items.length; index++) {
         console.log(aux);
-        if (parseFloat(subject.items[index].promedio) > 25.0 && parseFloat(subject.items[index].promedio) <= 75.0  ){
+        if (parseFloat(subject.items[index].promedio) > 25.0 && parseFloat(subject.items[index].promedio) <= 75.0) {
           // eslint-disable-next-line no-unused-vars
-          aux ++;
+          aux++;
         }
       }
-      console.log(aux/subject.items.length);
-      this.tag.innerHTML = ((aux/subject.items.length)*100).toFixed(2)+'%';
-      this.tag.style.cssText = 'width:'+(aux/subject.items.length)*100+'%;background:yellow; color:black; font-weight:bolder';
+      console.log(aux / subject.items.length);
+      this.tag.innerHTML = ((aux / subject.items.length) * 100).toFixed(2) + '%';
+      this.tag.style.cssText = 'width:' + (aux / subject.items.length) * 100 + '%;background:yellow; color:black; font-weight:bolder';
 
     })
   }
@@ -201,22 +218,23 @@ class TotalObserverGood {
 
     subject.items.forEach(e => {
       console.log(e)
-      this.tag.innerHTML=''
-      let aux=0;
+      this.tag.innerHTML = ''
+      let aux = 0;
       for (let index = 0; index < subject.items.length; index++) {
         console.log(aux);
-        if (parseFloat(subject.items[index].promedio) > 75.0 && parseFloat(subject.items[index].promedio) <= 100.0  ){
+        if (parseFloat(subject.items[index].promedio) > 75.0 && parseFloat(subject.items[index].promedio) <= 100.0) {
           // eslint-disable-next-line no-unused-vars
-          aux ++;
+          aux++;
         }
       }
-      console.log(aux/subject.items.length);
-      this.tag.innerHTML = ((aux/subject.items.length)*100).toFixed(2)+'%';
-      this.tag.style.cssText = 'width:'+(aux/subject.items.length)*100+'%; background:green; color:black; font-weight:bolder';
+      console.log(aux / subject.items.length);
+      this.tag.innerHTML = ((aux / subject.items.length) * 100).toFixed(2) + '%';
+      this.tag.style.cssText = 'width:' + (aux / subject.items.length) * 100 + '%; background:green; color:black; font-weight:bolder';
 
     })
   }
 }
+
 // eslint-disable-next-line no-unused-vars
 class DynamicObserver {
   constructor(tag, fn) {
@@ -228,6 +246,7 @@ class DynamicObserver {
     this.fn(subject, this.tag);
   }
 }
+
 let itemsSubject = new ItemSubject();
 
 export default {
@@ -263,7 +282,7 @@ export default {
           // this.lista.push({nombre: this.nombre, promedio: this.promedio});
           console.log(this.promedio)
           console.log(this.nombre)
-         itemsSubject.notify({
+          itemsSubject.notify({
             nombre: this.nombre,
             promedio: this.promedio,
           });

@@ -26,7 +26,7 @@
 
   </div>
   <a href="https://refactoring.guru/es/design-patterns/observer">
-    <img class="mt-4 mb-4 col-5 img-thumbnail" src="./assets/img_2.png" alt="representacion patron observer">
+    <img class="mt-4 mb-4 col-5 img-thumbnail" src="./assets/img_3.png" alt="representacion patron observer">
   </a>
 
   <div class="col-8 m-auto mt-5">

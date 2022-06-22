@@ -70,21 +70,7 @@
 </template>
 
 <script>
-async function getResponse() {
-  const response = await fetch(
-      'https://localhost/api/students/',
-      {
-        method: 'GET'
-      }
-  );
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return response.json();
-}
-getResponse().then(data => {
-  console.log(data);
-});
+
 
 class Subject {
   constructor() {
@@ -209,6 +195,7 @@ class TotalObserverRegular {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 class TotalObserverGood {
   constructor(tag) {
     this.tag = tag;
@@ -232,18 +219,6 @@ class TotalObserverGood {
       this.tag.style.cssText = 'width:' + (aux / subject.items.length) * 100 + '%; background:green; color:black; font-weight:bolder';
 
     })
-  }
-}
-
-// eslint-disable-next-line no-unused-vars
-class DynamicObserver {
-  constructor(tag, fn) {
-    this.tag = tag;
-    this.fn = fn;
-  }
-
-  notify(subject) {
-    this.fn(subject, this.tag);
   }
 }
 
@@ -275,6 +250,7 @@ export default {
       itemsSubject.susbcribe(totalObserver);
       itemsSubject.susbcribe(totalObserver1);
       itemsSubject.susbcribe(totalObserver2);
+      itemsSubject.unsubscribe(totalObserver1)
       if (parseInt(this.promedio) > 100) {
         alert("El promedio no debe ser mayor a 100")
       } else {
@@ -290,84 +266,9 @@ export default {
           alert("ingrese el nombre y la nota del estudiante")
         }
       }
-
     },
-    // async created() {
-    //   const response = await fetch("https://localhost/api/students/").
-    //   then(()=>{
-    //     this.lista=data.json
-    //   }).catch(err => console.log(err));
-    //   const data = await response.json();
-    //   console.log(this.lista)
-    // }
   }
   , computed: {
-    // eslint-disable-next-line vue/return-in-computed-property
-    // calculemalos: function () {
-    //   let M = 0;
-    //   for (let i = 0; i < this.lista.length; i++) {
-    //     if (parseInt(this.lista.at(i).promedio) <= 25) {
-    //       // eslint-disable-next-line no-unused-vars
-    //       M++;
-    //     }
-    //   }
-    //   var total;
-    //   if (M / this.lista.length) {
-    //     total = (M / this.lista.length) * 100
-    //   } else {
-    //     total = 0;
-    //   }
-    //   return total;
-    // },
-    // calculeregular: function () {
-    //   let M = 0;
-    //   for (let i = 0; i < this.lista.length; i++) {
-    //     if (parseInt(this.lista.at(i).promedio) > 25 && parseInt(this.lista.at(i).promedio) <= 75) {
-    //       // eslint-disable-next-line no-unused-vars
-    //       M++;
-    //     }
-    //   }
-    //   var total;
-    //   if (M / this.lista.length) {
-    //     total = (M / this.lista.length) * 100
-    //   } else {
-    //     total =
-    //         0;
-    //   }
-    //   return total;
-    // },
-    // calculebuenos: function () {
-    //   let M = 0;
-    //   for (let i = 0; i < this.lista.length; i++) {
-    //     if (parseInt(this.lista.at(i).promedio) > 75 && parseInt(this.lista.at(i).promedio) <= 100) {
-    //       // eslint-disable-next-line no-unused-vars
-    //       M++;
-    //     }
-    //   }
-    //   var total;
-    //   if (M / this.lista.length) {
-    //     total = (M / this.lista.length) * 100
-    //   } else {
-    //     total =
-    //         0;
-    //   }
-    //   return total;
-    // },
-    // colorb: function () {
-    //   return {
-    //     'bg-success': this.calculebuenos,
-    //   }
-    // },
-    // colorm: function () {
-    //   return {
-    //     'bg-danger': this.calculemalos,
-    //   }
-    // },
-    // colorr: function () {
-    //   return {
-    //     'bg-warning': this.calculeregular,
-    //   }
-    // }
   }
 }
 </script>
